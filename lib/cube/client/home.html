@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cube</title>
+    <script type="text/javascript" src="/d3/d3.js"></script>
+    <script type="text/javascript" src="/cube.js"></script>
+    <link type="text/css" rel="stylesheet" href="/cube.css"/>
+  </head>
+  <body>
+    <h1>Boards</h1>
+    <ol id="boards"></ol>
+
+    <a href="/new">New Board</a>
+
+    <script type="text/javascript">
+
+      var mode = "list",
+          boards = cube.boards("ws://" + location.host + "/boards");
+
+    </script>
+  </body>
+</html>
