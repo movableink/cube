@@ -15,7 +15,7 @@
     "websocket": "0.0.16",
     "websocket-server": "1.4.04",
     "eyes": "0.1.6",
-    "querystring": "0.0.4",
+    "querystring": "0.1.0",
     "forever": "0.7.2",
     "socket.io": "0.8.7"
   }
