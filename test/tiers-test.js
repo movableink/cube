@@ -17,6 +17,68 @@ suite.addBatch({
     }
   },
 
+  "second10": {
+    topic: tiers[1e4],
+    "has the key 1e4": function(tier) {
+      assert.strictEqual(tier.key, 1e4);
+    },
+    "next is undefined": function(tier) {
+      assert.isUndefined(tier.next);
+    },
+    "size is undefined": function(tier) {
+      assert.isUndefined(tier.size);
+    },
+
+    "floor": {
+      "rounds down to 10-seconds": function(tier) {
+        assert.deepEqual(tier.floor(utc(2011, 08, 02, 12, 00, 20)), utc(2011, 08, 02, 12, 00, 20));
+        assert.deepEqual(tier.floor(utc(2011, 08, 02, 12, 00, 21)), utc(2011, 08, 02, 12, 00, 20));
+        assert.deepEqual(tier.floor(utc(2011, 08, 02, 12, 00, 23)), utc(2011, 08, 02, 12, 00, 20));
+        assert.deepEqual(tier.floor(utc(2011, 08, 02, 12, 00, 39)), utc(2011, 08, 02, 12, 00, 30));
+        assert.deepEqual(tier.floor(utc(2011, 08, 02, 12, 00, 40)), utc(2011, 08, 02, 12, 00, 40));
+      },
+      "does not modify the passed-in date": function(tier) {
+        var date = utc(2011, 08, 02, 12, 00, 21);
+        assert.deepEqual(tier.floor(date), utc(2011, 08, 02, 12, 00, 20));
+        assert.deepEqual(date, utc(2011, 08, 02, 12, 00, 21));
+      }
+    },
+
+    "ceil": {
+      "rounds up to 10-seconds": function(tier) {
+        assert.deepEqual(tier.ceil(utc(2011, 08, 02, 12, 00, 20)), utc(2011, 08, 02, 12, 00, 20));
+        assert.deepEqual(tier.ceil(utc(2011, 08, 02, 12, 00, 21)), utc(2011, 08, 02, 12, 00, 30));
+        assert.deepEqual(tier.ceil(utc(2011, 08, 02, 12, 00, 23)), utc(2011, 08, 02, 12, 00, 30));
+        assert.deepEqual(tier.ceil(utc(2011, 08, 02, 12, 00, 39)), utc(2011, 08, 02, 12, 00, 40));
+        assert.deepEqual(tier.ceil(utc(2011, 08, 02, 12, 00, 40)), utc(2011, 08, 02, 12, 00, 40));
+      },
+      "does not modified the specified date": function(tier) {
+        var date = utc(2011, 08, 02, 12, 00, 21);
+        assert.deepEqual(tier.ceil(date), utc(2011, 08, 02, 12, 00, 30));
+        assert.deepEqual(date, utc(2011, 08, 02, 12, 00, 21));
+      }
+    },
+
+    "step": {
+      "increments time by ten seconds": function(tier) {
+        var date = utc(2011, 08, 02, 23, 59, 20);
+        assert.deepEqual(date = tier.step(date), utc(2011, 08, 02, 23, 59, 30));
+        assert.deepEqual(date = tier.step(date), utc(2011, 08, 02, 23, 59, 40));
+        assert.deepEqual(date = tier.step(date), utc(2011, 08, 02, 23, 59, 50));
+        assert.deepEqual(date = tier.step(date), utc(2011, 08, 03, 00, 00, 00));
+        assert.deepEqual(date = tier.step(date), utc(2011, 08, 03, 00, 00, 10));
+        assert.deepEqual(date = tier.step(date), utc(2011, 08, 03, 00, 00, 20));
+      },
+      "does not round the specified date": function(tier) {
+        assert.deepEqual(tier.step(utc(2011, 08, 02, 12, 21, 23)), utc(2011, 08, 02, 12, 21, 33));
+      },
+      "does not modify the specified date": function(tier) {
+        var date = utc(2011, 08, 02, 12, 20, 00);
+        assert.deepEqual(tier.step(date), utc(2011, 08, 02, 12, 20, 10));
+        assert.deepEqual(date, utc(2011, 08, 02, 12, 20, 00));
+      }
+    }
+  },
   "minute5": {
     topic: tiers[3e5],
     "has the key 3e5": function(tier) {
