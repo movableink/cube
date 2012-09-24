@@ -9,7 +9,7 @@
   "main": "./lib/cube",
   "dependencies": {
     "d3": "2.7.2",
-    "mongodb": "0.9.9-7",
+    "mongodb": "1.0.2",
     "pegjs": "0.6.2",
     "vows": "0.5.11",
     "websocket": "0.0.16",
